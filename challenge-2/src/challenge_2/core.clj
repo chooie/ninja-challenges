@@ -40,9 +40,27 @@
                                           sorted-sign-revenues-with-indexes)]
     descending-revenues-with-indexes))
 
+(declare get-adjacent-signs-for-first-element
+         get-difference-between-vectors)
+(defn split-revenues-by-k-value
+  [number-of-signs signs signs-info k-value]
+  (loop [signs signs
+         signs-info signs-info
+         revenues-split-by-k-value []]
+    (let [next-adjacents (get-adjacent-signs-for-first-element number-of-signs
+                                                               signs
+                                                               signs-info
+                                                               k-value)
+          signs-remaining (get-difference-between-vectors next-adjacents
+                                                          signs-info)])))
+
+(defn get-difference-between-vectors
+  [vector1 vector2]
+  ())
+
 (declare get-adjacent-signs-within-k-value)
 
-(defn split-revenues-by-k-value
+(defn get-adjacent-signs-for-first-element
   [number-of-signs signs signs-info k-value]
   (let [first-sign (get signs-info 0)
         revenue (:revenue first-sign)

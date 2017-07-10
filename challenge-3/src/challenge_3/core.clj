@@ -1,23 +1,12 @@
 (ns challenge-3.core)
 
-(declare read-lines-from-std-in
-         get-list-information
-         get-missing-numbers)
-
-(defn -main
-  []
-  (println *in*)
-  (let [lines (vec (read-lines-from-std-in))
-        {:keys [a-list b-list]} (get-list-information lines)
-        missing-numbers (get-missing-numbers a-list b-list)]
-    (doseq [missing-number missing-numbers]
-        (println missing-number))))
-
 (defn- read-lines-from-std-in
   []
   (line-seq (java.io.BufferedReader. *in*)))
 
-(declare get-integer)
+(defn- get-integer
+  [number-string]
+  (Integer/parseInt number-string))
 
 (defn get-list-information
   [lines]
@@ -29,10 +18,6 @@
         b-integers (map get-integer (clojure.string/split b-line #" "))]
     {:a-list a-integers
      :b-list b-integers}))
-
-(defn- get-integer
-  [number-string]
-  (Integer/parseInt number-string))
 
 (defn get-missing-numbers
   [a-list b-list]
@@ -61,3 +46,14 @@
                 (recur a-index
                        @b-index-with-different-number
                        (conj missing-numbers b-number))))))))))
+
+(defn -main
+  []
+  (let [lines (vec (read-lines-from-std-in))
+        {:keys [a-list b-list]} (get-list-information lines)
+        missing-numbers (get-missing-numbers a-list b-list)
+        missing-numbers-with-spaces (interpose " " missing-numbers)]
+    (doseq [missing-number missing-numbers-with-spaces]
+        (print missing-number))))
+
+(-main)
